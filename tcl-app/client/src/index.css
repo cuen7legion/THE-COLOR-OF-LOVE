@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&family=UnifrakturMaguntia&display=swap');
+
+:root {
+  /* The Color of Love — Mistica Nocturna */
+  --background: 258 33% 13%;         /* #1A1530 fondo */
+  --foreground: 258 20% 92%;         /* #EDE8F5 texto */
+  --card: 258 30% 16%;
+  --card-foreground: 258 20% 92%;
+  --popover: 258 33% 13%;
+  --popover-foreground: 258 20% 92%;
+  --primary: 45 70% 52%;             /* #D4AF37 dorado */
+  --primary-foreground: 258 33% 13%;
+  --secondary: 258 45% 82%;          /* #C4B5FD lila */
+  --secondary-foreground: 258 33% 13%;
+  --muted: 258 20% 22%;
+  --muted-foreground: 258 15% 58%;   /* #8B7FAA */
+  --accent: 45 70% 52%;
+  --accent-foreground: 258 33% 13%;
+  --destructive: 0 70% 55%;
+  --destructive-foreground: 258 20% 92%;
+  --border: 258 30% 22%;
+  --input: 258 30% 22%;
+  --ring: 45 70% 52%;
+  --radius: 0.75rem;
+}
+
+.dark {
+  --background: 258 33% 13%;
+  --foreground: 258 20% 92%;
+  --card: 258 30% 16%;
+  --card-foreground: 258 20% 92%;
+  --popover: 258 33% 13%;
+  --popover-foreground: 258 20% 92%;
+  --primary: 45 70% 52%;
+  --primary-foreground: 258 33% 13%;
+  --secondary: 258 45% 82%;
+  --secondary-foreground: 258 33% 13%;
+  --muted: 258 20% 22%;
+  --muted-foreground: 258 15% 58%;
+  --accent: 45 70% 52%;
+  --accent-foreground: 258 33% 13%;
+  --destructive: 0 70% 55%;
+  --destructive-foreground: 258 20% 92%;
+  --border: 258 30% 22%;
+  --input: 258 30% 22%;
+  --ring: 45 70% 52%;
+}
+
+* { border-color: hsl(var(--border)); }
+body {
+  background: #1A1530;
+  color: #EDE8F5;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Golden Fibonacci ambient background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 20%, rgba(212,175,55,0.06) 0%, transparent 50%),
+              radial-gradient(ellipse at 70% 80%, rgba(196,181,253,0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.font-serif { font-family: 'Playfair Display', serif; }
+.font-gothic { font-family: 'UnifrakturMaguntia', serif; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(196,181,253,0.15); border-radius: 3px; }
+
+/* Heart of light animation */
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+.heart-beat { animation: heartbeat 2.4s ease-in-out infinite; }
+
+/* Fade in */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-in { animation: fade-in 0.5s ease-out; }
+
+/* Golden shimmer */
+@keyframes shimmer {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+.shimmer { animation: shimmer 3s ease-in-out infinite; }
+
+input, textarea {
+  background: rgba(196,181,253,0.05);
+  border: 1px solid rgba(196,181,253,0.15);
+  color: #EDE8F5;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+input:focus, textarea:focus { border-color: rgba(212,175,55,0.4); }
+input[type="range"] { padding: 0; height: 4px; }
+
+button { font-family: inherit; }
