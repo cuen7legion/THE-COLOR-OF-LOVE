@@ -27,7 +27,7 @@ jobs:
       - name: Build frontend
         run: npx vite build --outDir dist
         env:
-          VITE_BASE: "/nombre-de-tu-repo/"
+          VITE_BASE: "/THE-COLOR-OF-LOVE/"
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
