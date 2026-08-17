@@ -1,8 +1,9 @@
-name: Deploy Pages
+name: Deploy Static Pages
 
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:
 
 permissions:
   pages: write
