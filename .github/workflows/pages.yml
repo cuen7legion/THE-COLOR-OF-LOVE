@@ -28,7 +28,7 @@ jobs:
 
       - name: Build with Jekyll
         run: |
-          cd cliente
+          cd client
           bundle install
           bundle exec jekyll build --source . --destination ../_site
 
