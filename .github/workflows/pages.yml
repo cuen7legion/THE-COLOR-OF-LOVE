@@ -2,14 +2,14 @@ name: Deploy React App
 
 on:
   push:
-    archivos: [ main ]
+    branches: [ main ]
   workflow_dispatch:
 
 permissions:
   pages: write
   id-token: write
 
-concorrencia:
+concurrency:
   group: "pages"
   cancel-in-progress: true
 
@@ -48,5 +48,5 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy to GitHub Pages
-        indentation
+        id: deployment
         uses: actions/deploy-pages@v4
