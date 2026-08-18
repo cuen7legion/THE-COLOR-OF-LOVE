@@ -6,10 +6,6 @@ on:
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
-    container: ghcr.io/railwayapp/cli:latest
-    env:
-      RAILWAY_TOKEN: ${{ secrets.RAILWAY_6bef5750-cc8f-414a-8640-193cb49d5e4d }}
-      SVC_ID: ${{ secrets.RAILWAY_SERVICE_ID }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -20,10 +16,15 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Build production assets
         run: npm run build
 
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
       - name: Deploy to Railway
-        run: railway up --service=${{ env.SVC_ID }}
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: railway up --service=${{ secrets.RAILWAY_SERVICE_ID }}
