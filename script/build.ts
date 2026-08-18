@@ -1,6 +1,16 @@
 import { build as esbuild } from "esbuild";
 import { build as viteBuild } from "vite";
 import { rm, readFile } from "node:fs/promises";
+#!/usr/bin/env tsx
+import { $ } from 'zx';
+import * as fs from 'fs/promises';
+
+console.log('building client...');
+
+// Construye desde la carpeta client
+await $`cd client && vite build`;
+
+console.log('client built successfully');
 
 // server deps to bundle to reduce openat(2) syscalls
 // which helps cold start times
