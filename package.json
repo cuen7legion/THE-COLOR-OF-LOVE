@@ -107,7 +107,6 @@
     }
   }
 }
-{
   "scripts": {
     "build": "tsx script/build.ts",
     "start": "node server/index.js"
