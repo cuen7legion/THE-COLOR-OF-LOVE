@@ -1,8 +1,11 @@
+#!/usr/bin/env tsx
+import { execSync } from 'child_process';
 import { build as esbuild } from "esbuild";
 import { build as viteBuild } from "vite";
 import { rm, readFile } from "node:fs/promises";
 import { $ } from 'zx';
 import * as fs from 'fs/promises';
+import * as path from 'path';
 
 console.log('building client...');
 
@@ -72,3 +75,20 @@ buildAll().catch((err) => {
   console.error(err);
   process.exit(1);
 });
+async function main() {
+  console.log('Building client...');
+  
+  try {
+    execSync('cd client && npm run build', {
+      stdio: 'inherit',
+      cwd: path.resolve(__dirname, '..')
+    });
+    
+    console.log('✅ Client built successfully');
+  } catch (error) {
+    console.error('❌ Build failed');
+    process.exit(1);
+  }
+}
+
+main();
