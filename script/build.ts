@@ -1,22 +1,11 @@
 #!/usr/bin/env tsx
-import { execSync } from 'child_process';
 import { build as esbuild } from "esbuild";
 import { build as viteBuild } from "vite";
-import { rm, readFile } from "node:fs/promises";
-import { $ } from 'zx';
-import * as fs from 'fs/promises';
+import { readFile } from "node:fs/promises";
 import * as path from 'path';
 
-console.log('building client...');
-
-// Construye desde la carpeta client
-await $`cd client && vite build`;
-
-console.log('client built successfully');
-
-// server deps to bundle to reduce openat(2) syscalls
-// which helps cold start times
 const allowlist = [
+  "@anthropic-ai/sdk",
   "@google/generative-ai",
   "axios",
   "cors",
@@ -40,15 +29,20 @@ const allowlist = [
   "xlsx",
   "zod",
   "zod-validation-error",
+  "dotenv",
 ];
 
-async function buildAll() {
-  await rm("dist", { recursive: true, force: true });
+async function main() {
+  console.log('🏗️ Building client...');
+  
+  // Construir frontend desde carpeta client
+  await viteBuild({
+    configFile: path.resolve(__dirname, 'vite.config.ts'),
+  });
+  
+  console.log('✅ Client built');
 
-  console.log("building client...");
-  await viteBuild();
-
-  console.log("building server...");
+  console.log('🏗️ Bundling server...');
   const pkg = JSON.parse(await readFile("package.json", "utf-8"));
   const allDeps = [
     ...Object.keys(pkg.dependencies || {}),
@@ -65,30 +59,17 @@ async function buildAll() {
     define: {
       "process.env.NODE_ENV": '"production"',
     },
-    minify: true,
+    minify: false,
     external: externals,
     logLevel: "info",
+    sourcemap: false,
   });
+
+  console.log('✅ Server bundled');
+  console.log('🎉 Build complete!');
 }
 
-buildAll().catch((err) => {
-  console.error(err);
+main().catch((err) => {
+  console.error('❌ Build failed:', err);
   process.exit(1);
 });
-async function main() {
-  console.log('Building client...');
-  
-  try {
-    execSync('cd client && npm run build', {
-      stdio: 'inherit',
-      cwd: path.resolve(__dirname, '..')
-    });
-    
-    console.log('✅ Client built successfully');
-  } catch (error) {
-    console.error('❌ Build failed');
-    process.exit(1);
-  }
-}
-
-main();
