@@ -4,11 +4,11 @@ import fs from "node:fs";
 import path from "node:path";
 
 export function serveStatic(app: Express) {
-  const distPath = path.resolve(__dirname, "public");
-  if (!fs.existsSync(distPath)) {
-    throw new Error(
-      `Could not find the build directory: ${distPath}, make sure to build the client first`,
-    );
+  const distPath = path.resolve(__dirname);
+
+  if (!fs.existsSync(path.resolve(distPath, "index.html"))) {
+    console.warn(`⚠️ No index.html found in ${distPath}, static serving disabled`);
+    return;
   }
 
   app.use(express.static(distPath));
