@@ -4,8 +4,8 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Necesario para compilar better-sqlite3
-RUN apk add --no-cache python3 make g++
+# Herramientas necesarias para compilar better-sqlite3
+RUN apk add --no-cache python3 make g++ libc6-compat
 
 # Install dependencies
 COPY package.json package-lock.json ./
@@ -20,6 +20,9 @@ RUN npm run build
 # ===== Production stage =====
 FROM node:20-alpine
 WORKDIR /app
+
+# Instalar runtime para better-sqlite3
+RUN apk add --no-cache libc6-compat
 
 # Copiar artefactos de build
 COPY --from=builder /app/dist ./dist
