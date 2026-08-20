@@ -8,8 +8,8 @@ WORKDIR /app
 RUN apk add --no-cache python3 make g++ libc6-compat
 
 # Install dependencies
-COPY package.json package-lock.json ./
-RUN npm Install
+COPY package.json ./
+RUN npm install
 
 # Copy source
 COPY . .
