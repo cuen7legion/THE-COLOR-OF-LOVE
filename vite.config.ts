@@ -1,18 +1,18 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import { resolve } from 'path'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import path from "path";
 
 export default defineConfig({
+  root: path.resolve(__dirname, "client"),
   plugins: [react()],
-  // Para Railway (despliegue desde raíz): SIN base path
-  // Para GitHub Pages: base: '/THE-COLOR-OF-LOVE/'
-  build: {
-    outDir: 'dist',
-    emptyOutDir: true,
-    rollupOptions: {
-      input: {
-        main: resolve(__dirname, 'index.html'),
-      },
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "client/src"),
+      "@shared": path.resolve(__dirname, "shared"),
     },
   },
-})
+  build: {
+    outDir: path.resolve(__dirname, "dist"),
+    emptyOutDir: true,
+  },
+});
