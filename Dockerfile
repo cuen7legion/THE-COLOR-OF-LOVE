@@ -28,4 +28,4 @@ ENV DATABASE_URL=/data/tcl.db
 
 EXPOSE 5000
 
-CMD ["node", "dist/index.cjs"]
+CMD ["sh", "-c", "mkdir -p /data && node dist/index.cjs"]
