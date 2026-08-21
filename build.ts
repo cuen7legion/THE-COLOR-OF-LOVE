@@ -30,7 +30,6 @@ const allowlist = [
   "zod",
   "zod-validation-error",
   "dotenv",
-  "better-sqlite3",
 ];
 
 async function main() {
