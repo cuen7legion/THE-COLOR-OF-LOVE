@@ -2,6 +2,8 @@
 import { build as esbuild } from "esbuild";
 import { build as viteBuild } from "vite";
 import { readFile } from "node:fs/promises";
+import * as path from "path";
+import { rm } from "node:fs/promises";
 
 const allowlist = [
   "@anthropic-ai/sdk",
@@ -32,8 +34,18 @@ const allowlist = [
 ];
 
 async function main() {
+  // Limpiar dist
+  await rm("dist", { recursive: true, force: true });
+
   console.log('Building client...');
-  await viteBuild();
+  await viteBuild({
+    configFile: path.resolve(process.cwd(), 'vite.config.ts'),
+    root: path.resolve(process.cwd(), 'client'),
+    build: {
+      outDir: path.resolve(process.cwd(), 'dist'),
+      emptyOutDir: true,
+    },
+  });
 
   console.log('Bundling server...');
   const pkg = JSON.parse(await readFile("package.json", "utf-8"));
